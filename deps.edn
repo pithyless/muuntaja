@@ -1,0 +1,7 @@
+{:paths ["modules/muuntaja/src"]
+ :deps  {metosin/jsonista          {:mvn/version "0.2.2"}
+         com.cognitect/transit-clj {:mvn/version "0.8.313"}
+         cheshire                  {:mvn/version "5.8.1"}
+         clj-commons/clj-yaml      {:mvn/version "0.6.0"}
+         clojure-msgpack           {:mvn/version "1.2.1"
+                                    :exclusions  [org.clojure/clojure]}}}
