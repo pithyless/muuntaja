@@ -48,6 +48,23 @@
 (defprotocol IntoInputStream
   (into-input-stream ^java.io.InputStream [this]))
 
+(util/when-ns
+ 'manifold.stream
+ (util/when-ns
+  'manifold.deferred
+  (util/when-ns
+   'byte-streams
+   (import '[manifold.stream BufferedStream])
+   (extend-protocol IntoInputStream
+     BufferedStream
+     (into-input-stream [this]
+       @(manifold.deferred/chain
+         this
+         #(manifold.stream/map byte-streams/to-byte-array %)
+         #(manifold.stream/reduce conj [] %)
+         #(byte-streams/to-input-stream %)))))))
+
+
 (extend-protocol IntoInputStream
   (Class/forName "[B")
   (into-input-stream [this] (ByteArrayInputStream. this))
